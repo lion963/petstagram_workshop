@@ -13,9 +13,10 @@ def pet_all(request):
 
 def pet_detail(request, pk):
     pet = Pet.objects.get(pk=pk)
+    data = len(Like.objects.filter(pet_id=pk))
     context = {
         'pet': pet,
-        'data': 0
+        'data': data
     }
     return render(request, 'pet_detail.html', context)
 
