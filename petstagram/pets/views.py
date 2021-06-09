@@ -29,5 +29,5 @@ def pet_like(request, pk):
         'pet': pet,
         'data': data
     }
-    # return redirect(f'pets/details/{pet.id}', context)
+    # return redirect('pets/details', {pet.id}, context)
     return render(request, 'pet_detail.html', context)
