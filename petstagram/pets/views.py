@@ -2,6 +2,7 @@ from itertools import count
 
 from django.shortcuts import render, redirect
 
+from pets.forms import PetCreateForm
 from pets.models import Pet, Like
 
 
@@ -31,3 +32,14 @@ def pet_like(request, pk):
     }
     # return redirect('pets/details', {pet.id}, context)
     return render(request, 'pet_detail.html', context)
+
+def create_pet(request):
+    if request.method == 'GET':
+        form = PetCreateForm()
+        return render(request, 'pet_create.html', {'form': form})
+    form = PetCreateForm(request.POST)
+    if form.is_valid():
+        pet = form.save()
+        pet.save()
+        return redirect('/pets')
+    return render(request, 'pet_create.html', {'form': form})
