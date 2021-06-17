@@ -19,8 +19,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/pets">All Pet Photos</a>
+                <a class="nav-link" href={% url 'landing' %}>Home</a>
+                <a class="nav-link" href={% url 'pet all' %}>All Pet Photos</a>
+                <a class="nav-link" href={% url 'create' %}>Add Pet Photo</a>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Login</a>
                 </li>
@@ -42,11 +43,40 @@
                     <h5><u>Age:</u> {{ pet.age }}</h5>
                 </div>
                 <p class="mt-2">Description: {{ pet.description }}</p>
+                <a href="{% url 'edit' pet.id %}" class="btn btn-success">Edit</a>
+                <a href="{% url 'delete' pet.id %}" class="btn btn-danger">Delete</a><br>
 				<a href="/pets/like/{{ pet.id }}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                 <p class="mt-2">Likes: {{ data }}</p>
+
+            </div>
+            </div>
+            <div class="'d-block" style="background-color: #f1e3e3; padding:2%">
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="box">
+                            <h5><em>{{ comment }}</em></h5>
+                            <hr>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="box">
+                    <h3>There are no comments for this pet.</h3>
+                    </div>
+                {% endif %}
+                <div class="box">
+                <form method="post" action={% url 'create comment' pet.id %} class="furniture-form">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button class="btn btn-primary mt-2" type="dubmit">Add Comment</button>
+                </form>
+                </div>
+            </div>
             </div>
         </div>
     </div>
+
+
+
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
