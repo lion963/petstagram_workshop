@@ -47,7 +47,7 @@ def create_pet(request):
     if request.method == 'GET':
         form = PetCreateForm()
         return render(request, 'pet_create.html', {'form': form})
-    form = PetCreateForm(request.POST)
+    form = PetCreateForm(request.POST, request.FILES)
     if form.is_valid():
         pet = form.save()
         pet.save()
@@ -59,7 +59,7 @@ def edit_pet(request, pk):
     if request.method == 'GET':
         form = PetCreateForm(instance=pet)
         return render(request, 'pet_edit.html', {'form': form})
-    form = PetCreateForm(request.POST, instance=pet)
+    form = PetCreateForm(request.POST, request.FILES, instance=pet)
     if form.is_valid():
         pet = form.save()
         pet.save()
