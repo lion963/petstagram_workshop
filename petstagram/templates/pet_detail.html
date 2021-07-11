@@ -12,9 +12,16 @@
                     <h5><u>Age:</u> {{ pet.age }}</h5>
                 </div>
                 <p class="mt-2">Description: {{ pet.description }}</p>
-                <a href="{% url 'edit' pet.id %}" class="btn btn-success">Edit</a>
-                <a href="{% url 'delete' pet.id %}" class="btn btn-danger">Delete</a><br>
-				<a href="/pets/like/{{ pet.id }}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                {% if pet.user == profile %}
+                    <a href="{% url 'edit' pet.id %}" class="btn btn-success">Edit</a>
+                    <a href="{% url 'delete' pet.id %}" class="btn btn-danger">Delete</a><br>
+                {% else %}
+                    {% if liked %}
+				        <a ><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    {% else %}
+                        <a href="/pets/like/{{ pet.id }}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                    {% endif %}
+                {% endif %}
                 <p class="mt-2">Likes: {{ data }}</p>
 
             </div>
@@ -33,11 +40,13 @@
                     </div>
                 {% endif %}
                 <div class="box">
+                {% if pet.user != profile %}
                 <form method="post" action={% url 'create comment' pet.id %} class="furniture-form">
                     {% csrf_token %}
                     {{ form }}
                     <button class="btn btn-primary mt-2" type="dubmit">Add Comment</button>
                 </form>
+                {% endif %}
                 </div>
             </div>
             </div>

@@ -10,7 +10,9 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ pet.type }} {{ pet.name}}, Age: {{ pet.age }}</h5>
                         <p class="card-text">{{ pet.description }}</p>
+                        {% if user.is_authenticated %}
                         <a href="./pets/details/{{ pet.id }}" class="btn btn-primary">See details</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -1,5 +1,7 @@
 from django.db import models
 
+from accounts.models import UserProfile
+
 
 class Pet(models.Model):
     TYPE_CHOICES = (
@@ -12,7 +14,9 @@ class Pet(models.Model):
     age = models.PositiveIntegerField(null=True)
     description = models.TextField(null=True)
     image_url = models.ImageField(upload_to='images/pets')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
 
 class Like(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE, null=True)
